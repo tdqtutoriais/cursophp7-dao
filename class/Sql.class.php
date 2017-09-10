@@ -4,43 +4,36 @@
 
 	class Sql extends PDO{
 
-		private $id;
-		private $login;
-		private $senha;
-		private $cadastro;
 
+		private $Conn;
 
-		public function setId(){
-
+		public function __construct(){
+			$this->Conn = new PDO("mysql:host=localhost;dbname=dbphp7;", "root", "");
 		}
 
-		public function getId(){
-			
+		private function setParams($Statement, $Parametros = array()){
+			foreach ($Parametros as $Chave => $Valor) {
+				$this->setParam();
+			}
 		}
 
-		public function setLogin(){
-
+		private function setParam($Statement, $Chave, $Valor){
+			$Statement->bindParams($Chave, $Valor);
 		}
 
-		public function getLogin(){
-
+		public function Query($Comando, $Parametros = array()){
+			$statement = $this->Conn->prepare($Comando);
+			$this->setParams($statement, $Parametros);
+			$statement->execute();
+			return $statement;
 		}
 
-		public function setSenha(){
-
+		public function Select($Comando, $Parametros = array()){
+			$statement = $this->Query($Comando, $Parametros);
+			return $statement->FetchAll(PDO::FETCH_ASSOC);
 		}
 
-		public function getSenha(){
 
-		}
-
-		public function setCadastro(){
-
-		}
-
-		public function getCadastro(){
-			
-		}
 
 
 	}
