@@ -1,13 +1,13 @@
 <?php
-
-
+	
 	spl_autoload_register(function($ClassName){
 
-		$dirName = "class";
-		$FilePath = $dirName . DIRECTORY_SEPARATOR . $ClassName . ".php";
+		$FileName = "class" . DIRECTORY_SEPARATOR . $ClassName . ".class.php";
 
-		if (file_exists($FilePath)) {
-			require_once ($FilePath);
+		if (file_exists($FileName)) {
+			require_once($FileName);
+		}else{
+			echo "Não foi possivel incluir o arquivo {$ClassName}.class.php";
 		}
 
 	});
